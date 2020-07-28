@@ -10,7 +10,7 @@ const TokenStyle = styled.div`
   display:flex;
   justify-content:center;
   align-items:center;
-  background:#fff;
+  background: ${(props)=>props.color.background};
   margin-right:15px;
   z-index:2;
   &:active{
@@ -19,20 +19,36 @@ const TokenStyle = styled.div`
 `
 const colors ={
     paper:{
-        base:'#526ef4'
+        base:'#526ef4',
+        background:'#fff'
     },
     rock:{
-        base:'#de3a5a'
+        base:'#de3a5a',
+        background:'#fff'
     },
     scissors:{
-        base:'#eca81e'
+        base:'#eca81e',
+        background:'#fff',
+    },
+     default:{
+        base:'#122343',
+        background:'#122343',
     },
 
 }
-export default function Token({name}) {
+export default function Token(props) {
+    const hanlderClick = ()=>{
+        let listado = ['paper', 'rock', 'scissors'];
+        let aleatorio = Math.floor(Math.random()*(listado.length));
+        let seleccion = listado[aleatorio];
+        console.log(seleccion)
+        props.clickButton(props.name, seleccion)
+        
+    }
+    const colores = colors[props.name] || colors.default
     return (
-        <TokenStyle color={colors[name]}>
-           <img src={`./images/icon-${name}.svg`} alt=""/>
+        <TokenStyle color={colores}>
+           <img onClick={hanlderClick} src={`./images/icon-${props.name}.svg`} alt=""/>
         </TokenStyle>
     )
 }
